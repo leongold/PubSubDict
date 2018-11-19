@@ -1,12 +1,10 @@
 
-import os
 import time
 import unittest
-import signal
 import subprocess
 from contextlib import contextmanager
 
-from server import ServerFactory
+from server import PubSubDictServerFactory
 from psdict import PubSubDict
 
 

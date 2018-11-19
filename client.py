@@ -6,10 +6,10 @@ import messages
 import protocol
 
 
-class ClientProtocol(protocol.PubSubDictProtocol):
+class PubSubDictClientProtocol(protocol.PubSubDictProtocol):
 
     def __init__(self):
-        super(ClientProtocol, self).__init__()
+        super(PubSubDictClientProtocol, self).__init__()
         self._publish_callbacks = {}
         self._snapshot_callback = None
         self._connected = False
@@ -55,7 +55,7 @@ class ClientProtocol(protocol.PubSubDictProtocol):
         self.transport.write(packed)
 
 
-class ClientFactory(ClientFactory):
+class PubSubDictClientFactory(ClientFactory):
 
     def buildProtocol(self, addr):
-        return ClientProtocol()
+        return PubSubClientProtocol()

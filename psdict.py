@@ -13,7 +13,7 @@ from crochet import run_in_reactor
 from twisted.internet.endpoints import TCP4ClientEndpoint
 from twisted.internet.endpoints import connectProtocol
 
-from client import ClientProtocol
+from client import PubSubDictClientProtocol
 
 
 class NotConnectedError(Exception):
@@ -32,7 +32,7 @@ class PubSubDict(dict):
 
     def __init__(self, server_addr, server_port=8123, *args, **kwargs):
         super(PubSubDict, self).__init__(*args, **kwargs)
-        self._client = ClientProtocol()
+        self._client = PubSubDictClientProtocol()
         self._server_addr = server_addr
         self._server_port = server_port
         self._snapshot_cb = None
@@ -43,7 +43,7 @@ class PubSubDict(dict):
         self.publish(**{key: value})
 
     def __repr__(self):
-        return 'DistDict @ {}: {}'.format(
+        return 'PubSubDict @ {}: {}'.format(
             hex(id(self)),
             super(PubSubDict, self).__repr__()
         )

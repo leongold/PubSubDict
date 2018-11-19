@@ -9,15 +9,15 @@ import protocol
 import messages
 
 
-class ServerProtocol(protocol.PubSubDictProtocol):
+class PubSubDictServerProtocol(protocol.PubSubDictProtocol):
 
     def __init__(self, data, sub_map):
-        super(ServerProtocol, self).__init__()
+        super(PubSubDictServerProtocol, self).__init__()
         self._data = data
         self._sub_map = sub_map # key -> protocol
 
     def connectionLost(self, reason):
-        super(ServerProtocol, self).connectionLost(reason)
+        super(PubSubDictServerProtocol, self).connectionLost(reason)
         for clients in self._sub_map.values():
             if self in clients:
                 clients.remove(self)
@@ -71,16 +71,16 @@ class ServerProtocol(protocol.PubSubDictProtocol):
         TYPE_MAP[msg_type](data)
 
 
-class ServerFactory(Factory):
+class PubSubDictServerFactory(Factory):
 
     def __init__(self):
         self._data = {}
         self._sub_map = {}
 
     def buildProtocol(self, addr):
-        return ServerProtocol(self._data, self._sub_map)
+        return PubSubDictServerProtocol(self._data, self._sub_map)
 
 
 if __name__ == '__main__':
-    reactor.listenTCP(8123, ServerFactory())
+    reactor.listenTCP(8123, PubSubDictServerFactory())
     reactor.run()
