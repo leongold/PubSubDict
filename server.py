@@ -61,9 +61,6 @@ class ServerProtocol(protocol.PubSubDictProtocol):
                 client.transport.write(packed)
 
     def _on_message(self, msg):
-        # with open('/tmp/server.log', 'a+') as f:
-        #     f.write(str(self) + ' ' + str(msg) + '\n')
-
         TYPE_MAP = {
             messages.MsgTypes.Subscribe: self._on_subscribe,
             messages.MsgTypes.SnapshotRequest: self._on_snapshot_request,

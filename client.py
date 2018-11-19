@@ -15,9 +15,6 @@ class ClientProtocol(protocol.PubSubDictProtocol):
         self._connected = False
 
     def _on_message(self, msg):
-        # with open('/tmp/server.log', 'a+') as f:
-        #     f.write(str(self) + ' ' + str(msg) + '\n')
-
         TYPE_MAP = {
             messages.MsgTypes.Snapshot: self._on_snapshot,
             messages.MsgTypes.Publish: self._on_publish,
@@ -30,7 +27,7 @@ class ClientProtocol(protocol.PubSubDictProtocol):
             self._snapshot_callback(kvs)
 
     def _on_publish(self, kvs):
-        for key, value in kvs.items():
+        for key in kvs.keys():
             callback = self._publish_callbacks.get(key)
             callback(kvs)
 
@@ -38,7 +35,7 @@ class ClientProtocol(protocol.PubSubDictProtocol):
         for key, callback in keys_to_callbacks.items():
             self._publish_callbacks[key] = callback
 
-        packed = messages.pack_subscribe(keys_to_callbacks.keys())
+        packed = messages.pack_subscribe(list(keys_to_callbacks.keys()))
         self.transport.write(packed)
 
     def unsubscribe(self, *keys):
