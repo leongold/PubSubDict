@@ -53,9 +53,3 @@ class PubSubDictClientProtocol(protocol.PubSubDictProtocol):
         self._snapshot_callback = callback
         packed = messages.pack_snapshot_request(keys)
         self.transport.write(packed)
-
-
-class PubSubDictClientFactory(ClientFactory):
-
-    def buildProtocol(self, addr):
-        return PubSubClientProtocol()
