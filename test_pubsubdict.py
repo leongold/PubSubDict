@@ -1,4 +1,5 @@
 
+import os
 import time
 import unittest
 import subprocess
@@ -12,7 +13,11 @@ class DistDictTestCase(unittest.TestCase):
 
     def setUp(self):
         self.port = subprocess.Popen(
-            ['/home/lgoldber/psdict/server.py'], stdout=subprocess.PIPE
+            [os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'server.py'
+             )
+            ], stdout=subprocess.PIPE
         )
         time.sleep(1)
         self.ps_dict_1 = PubSubDict('127.0.0.1')
