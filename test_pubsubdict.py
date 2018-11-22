@@ -20,9 +20,9 @@ class DistDictTestCase(unittest.TestCase):
             ], stdout=subprocess.PIPE
         )
         time.sleep(1)
-        self.ps_dict_1 = PubSubDict('127.0.0.1')
+        self.ps_dict_1 = PubSubDict()
         self.ps_dict_1.connect(block=True)
-        self.ps_dict_2 = PubSubDict('127.0.0.1')
+        self.ps_dict_2 = PubSubDict()
         self.ps_dict_2.connect(block=True)
 
     def tearDown(self):
@@ -95,7 +95,7 @@ class DistDictTestCase(unittest.TestCase):
 
     @contextmanager
     def _psdict_context(self, num=1):
-        dicts = tuple([PubSubDict('127.0.0.1') for _ in range(num)])
+        dicts = tuple([PubSubDict() for _ in range(num)])
         for d in dicts:
             d.connect(block=True)
         try:
