@@ -30,7 +30,7 @@ def _raise_if_disconnected(func):
 
 class PubSubDict(dict):
 
-    def __init__(self, server_addr, server_port=8123, *args, **kwargs):
+    def __init__(self, server_addr='localhost', server_port=8123, *args, **kwargs):
         super(PubSubDict, self).__init__(*args, **kwargs)
         self._client = PubSubDictClientProtocol()
         self._server_addr = server_addr
@@ -52,7 +52,7 @@ class PubSubDict(dict):
     def connected(self):
         return self._client.connected
 
-    def connect(self, block=False):
+    def connect(self, block=True):
         point = TCP4ClientEndpoint(
             reactor, self._server_addr, self._server_port
         )
