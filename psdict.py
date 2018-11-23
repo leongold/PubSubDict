@@ -109,7 +109,7 @@ class PubSubDict(dict):
             self._snapshot_cb = None
 
     def _on_publish(self, kvs):
-        self.update(**kvs)
         for key, value in kvs.items():
+            super(PubSubDict, self).__setitem__(key, value)
             if key in self._callbacks:
                 self._callbacks[key](value)
